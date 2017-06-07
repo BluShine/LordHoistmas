@@ -17,7 +17,7 @@ public class CurveBall : MonoBehaviour {
     {
         float velMag = rb.velocity.magnitude;
         Vector3 velDirection = rb.velocity.normalized;
-        Vector3 curveDirection = (-rb.GetPointVelocity(transform.position + velDirection) - rb.velocity);
+        Vector3 curveDirection = (rb.GetPointVelocity(transform.position + velDirection) - rb.velocity);
         rb.AddForce((curveDirection - velDirection) * velMag * curvePower, ForceMode.Acceleration);
     }
 }
