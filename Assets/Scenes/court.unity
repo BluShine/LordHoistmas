@@ -1257,9 +1257,14 @@ MonoBehaviour:
   innerCircle: {fileID: 1574482158}
   targetLine: {fileID: 714725395}
   targetDot: {fileID: 690926577}
+  barrierPrefabs:
+  - {fileID: 1941446285389870, guid: b4801b16ad54fc748b120c9f7c2bd825, type: 2}
+  - {fileID: 1849854484881870, guid: 664a92293b001de418f6004e0089355f, type: 2}
+  - {fileID: 1019148578087876, guid: 1fdf328826a18b64890156998e9358a4, type: 2}
+  - {fileID: 1077902050750200, guid: b1355847e77f0ef4e968967aa97f4a37, type: 2}
   spinSpeed: 7
   aimSpeed: 30
-  scaleSpeed: 0.25
+  scaleSpeed: 0.15
   startScale: 0.1
   maxForce: 20
-  barrierSpin: 10
+  barrierSpinForce: 7

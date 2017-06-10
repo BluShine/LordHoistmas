@@ -9,8 +9,15 @@ public class Barrier : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        
 	}
+
+    public void setSize(float size)
+    {
+        Transform wall = transform.GetChild(0);
+        wall.localScale = new Vector3(1 + 2 * size, wall.localScale.y, wall.localScale.z);
+        wall.localPosition = new Vector3((1 - size) * Random.Range(-1f, 1f), wall.localPosition.y, wall.localPosition.z);
+    }
 	
 	// Update is called once per frame
 	void Update () {

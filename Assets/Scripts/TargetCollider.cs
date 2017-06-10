@@ -8,7 +8,6 @@ public class TargetCollider : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other)
         throwUI.hit(other);
     }
 }

@@ -13,6 +13,10 @@ public class ThrowUI : MonoBehaviour {
     public Transform targetDot;
     Rigidbody lastBall;
 
+    public GameObject[] barrierPrefabs;
+
+    List<GameObject> barriers;
+
     public float spinSpeed = 10;
     public float aimSpeed = 10;
     public float scaleSpeed = .5f;
@@ -31,13 +35,17 @@ public class ThrowUI : MonoBehaviour {
     static float LINETIMESTEP = .1f;
     static float LINEDRAG = .5f;
 
+    List<int> bag;
+
     //throwing properties
     public float maxForce = 20;
-    public float barrierSpin = 10;
+    public float barrierSpinForce = 10;
 
 	// Use this for initialization
 	void Start () {
         updateLine();
+        bag = new List<int>();
+        barriers = new List<GameObject>();
     }
 	
 	// Update is called once per frame
@@ -86,6 +94,7 @@ public class ThrowUI : MonoBehaviour {
 
     public void startThrow()
     {
+        spawnBarriers();
         rotatingParent.localRotation = Quaternion.Euler(Vector3.zero);
         state = TossState.Throwing;
         throwScale = startScale;
@@ -93,10 +102,75 @@ public class ThrowUI : MonoBehaviour {
         ballSpin = Vector3.zero;
     }
 
+    void spawnBarriers()
+    {
+        refreshBag();
+        barriers = new List<GameObject>();
+        for (int i = 0; i < 7; i++)//layers 
+        {
+            if(i < 3)
+            {
+                for(int j = 0; j < 2; j++)
+                {
+                    Barrier bar = GameObject.Instantiate<GameObject>(barrierPrefabs[pullBag()]).GetComponent<Barrier>();
+                    bar.curveDirection *= barrierSpinForce;
+                    bar.transform.position = transform.position;
+                    bar.transform.localScale = Vector3.one * (.5f + Mathf.Pow(6, i));
+                    bar.setSize(j);
+                    barriers.Add(bar.gameObject);
+                }
+            } else
+            {
+                refreshBag();
+                for (int j = 0; j < 3; j++)
+                {
+                    Barrier bar = GameObject.Instantiate<GameObject>(barrierPrefabs[pullBag()]).GetComponent<Barrier>();
+                    bar.curveDirection *= barrierSpinForce;
+                    bar.transform.position = transform.position;
+                    bar.transform.localScale = Vector3.one * (.5f + Mathf.Pow(6, i));
+                    bar.setSize(j/2f);
+                    barriers.Add(bar.gameObject);
+                }
+            }
+        }
+    }
+
+    void refreshBag()
+    {
+        bag = new List<int>();
+        List<int> shuffle = new List<int>();
+        shuffle.Add(0);
+        shuffle.Add(1);
+        shuffle.Add(2);
+        shuffle.Add(3);
+
+        for (int i = 0; i < 4; i++)
+        {
+            int j = Random.Range(0, shuffle.Count);
+            bag.Add(shuffle[j]);
+            shuffle.RemoveAt(j);
+        }
+    }
+
+    int pullBag()
+    {
+        if(bag.Count == 0)
+        {
+            refreshBag();
+        }
+        int result = bag[Random.Range(0, bag.Count)];
+        bag.Remove(result);
+        return result;
+    }
+
     public void endThrow()
     {
         state = TossState.Wait;
         lastBall = thrower.tossBall(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
+        foreach(GameObject bar in barriers)
+        {
+            if (bar != null) Destroy(bar);
+        }
     }
 
     void updateLine()
@@ -119,11 +193,22 @@ public class ThrowUI : MonoBehaviour {
         }
         targetLine.positionCount = line.Count;
         targetLine.SetPositions(line.ToArray());
-        targetDot.transform.position = rayHit.point + Vector3.up * .05f;
+        if (ended)
+        {
+            targetDot.transform.position = rayHit.point + Vector3.up * .05f;
+        } else
+        {
+            targetDot.transform.position = Vector3.down * 10;
+        }
     }
 
     public void hit(Collider t)
     {
-        
+        Barrier bar = t.GetComponentInParent<Barrier>();
+        if(bar != null)
+        {
+            ballSpin += bar.curveDirection;
+            Destroy(bar.gameObject);
+        }
     }
 }

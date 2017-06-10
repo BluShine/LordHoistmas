@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: barrier
+  m_Name: curve_down
   m_Shader: {fileID: 4800000, guid: e9c998fdab526ca4d9c390d58f04d931, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -38,7 +38,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b57525b6553564544a4d31dcaa4c82e7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3adc23996a740454fbf3a0bd7b2658a4, type: 3}
         m_Scale: {x: 6, y: 6}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
