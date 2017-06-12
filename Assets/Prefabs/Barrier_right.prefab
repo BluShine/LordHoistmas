@@ -134,5 +134,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e40d6ed3204f184eb1e2e545ff6d743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shrinkSpeed: 1.875
-  curveDirection: {x: 0, y: 1, z: 0}
+  shrinkSpeed: 2
+  curveDirection: {x: 0, y: 1, z: -1}

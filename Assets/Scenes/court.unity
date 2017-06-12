@@ -613,6 +613,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 1506519951719394, guid: e79aff43c284ce24d8f9d9490e918a6a, type: 2}
+  petardPrefab: {fileID: 1506519951719394, guid: 4c91144ee0745614290d3b3c0e7e5163,
+    type: 2}
   tossForce: 10
   spinForce: {x: 0, y: 0, z: 0}
 --- !u!4 &714725394

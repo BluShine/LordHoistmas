@@ -41,6 +41,8 @@ public class ThrowUI : MonoBehaviour {
     public float maxForce = 20;
     public float barrierSpinForce = 10;
 
+    bool thrownPetard = false;
+
 	// Use this for initialization
 	void Start () {
         updateLine();
@@ -166,7 +168,14 @@ public class ThrowUI : MonoBehaviour {
     public void endThrow()
     {
         state = TossState.Wait;
-        lastBall = thrower.tossBall(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
+        if (thrownPetard)
+        {
+            lastBall = thrower.tossBall(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
+        } else
+        {
+            lastBall = thrower.tossPetard(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
+            thrownPetard = true;
+        }
         foreach(GameObject bar in barriers)
         {
             if (bar != null) Destroy(bar);

@@ -24,10 +24,9 @@ GameObject:
   - component: {fileID: 23514452290739000}
   - component: {fileID: 54808818048712302}
   - component: {fileID: 114322507730178332}
-  - component: {fileID: 114040862947544990}
-  - component: {fileID: 120950220257526546}
+  - component: {fileID: 114759484599988930}
   m_Layer: 0
-  m_Name: Ball
+  m_Name: Petard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 1506519951719394}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 4740751d9edc1f049a08457dae58bc49, type: 2}
+  - {fileID: 2100000, guid: 03ddbf446f774044f970d00dc0b68f4a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,7 +91,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1506519951719394}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0.5
   m_AngularDrag: 0.25
   m_UseGravity: 1
@@ -100,21 +99,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &114040862947544990
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1506519951719394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 552e3cf6bdb2cb5488aaede2875a31de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoisting: 0
-  maxHoist: 0
-  finished: 0
-  highestPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &114322507730178332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -127,95 +111,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curvePower: 0.02
---- !u!120 &120950220257526546
-LineRenderer:
+--- !u!114 &114759484599988930
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1506519951719394}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_MotionVectors: 0
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_Materials:
-  - {fileID: 2100000, guid: f06a1cac7a5a98441869b163b4e34c0a, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Positions: []
-  m_Parameters:
-    serializedVersion: 2
-    widthMultiplier: 0.25
-    widthCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 0.5
-        inSlope: -1.2777778
-        outSlope: -1.2777778
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    colorGradient:
-      serializedVersion: 2
-      key0: {r: 0.7941176, g: 0.07590828, b: 0.50683415, a: 1}
-      key1: {r: 0.6408902, g: 0.199827, b: 0.64705884, a: 1}
-      key2: {r: 0.4144172, g: 0.11132138, b: 0.52205884, a: 0}
-      key3: {r: 0.4144172, g: 0.11132138, b: 0.52205884, a: 0}
-      key4: {r: 0, g: 0, b: 0, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 32768
-      ctime2: 65535
-      ctime3: 65535
-      ctime4: 0
-      ctime5: 0
-      ctime6: 0
-      ctime7: 0
-      atime0: 0
-      atime1: 65535
-      atime2: 0
-      atime3: 0
-      atime4: 0
-      atime5: 0
-      atime6: 0
-      atime7: 0
-      m_Mode: 0
-      m_NumColorKeys: 3
-      m_NumAlphaKeys: 2
-    numCornerVertices: 5
-    numCapVertices: 10
-    alignment: 0
-    textureMode: 0
-  m_UseWorldSpace: 1
-  m_Loop: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e83d5d45eac67fc4ea7c20cdaf2bc640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionForce: 300
+  hoistForce: 300
+  radius: 5
+  hoist: 0
 --- !u!135 &135352530291425278
 SphereCollider:
   m_ObjectHideFlags: 1
