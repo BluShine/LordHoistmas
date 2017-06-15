@@ -12,10 +12,14 @@ public class ThrowUI : MonoBehaviour {
     public LineRenderer targetLine;
     public Transform targetDot;
     Rigidbody lastBall;
+    MainUI mainUI;
 
     public GameObject[] barrierPrefabs;
 
     List<GameObject> barriers;
+
+    public int ballsPerPlayer = 4;
+    int ballsThrown = 0;
 
     public float spinSpeed = 10;
     public float aimSpeed = 10;
@@ -24,8 +28,10 @@ public class ThrowUI : MonoBehaviour {
     float targetScale = .5f;
     float throwScale = .1f;
     float targetRotation = 0;
+    float targetElevation = -20f;
     Vector3 ballSpin;
     bool drawLine = true;
+    bool aimToggle = false;
     enum TossState
     {
         Aim, Throwing, Wait
@@ -42,12 +48,14 @@ public class ThrowUI : MonoBehaviour {
     public float barrierSpinForce = 10;
 
     bool thrownPetard = false;
+    bool p1Turn = true;
 
 	// Use this for initialization
 	void Start () {
         updateLine();
         bag = new List<int>();
         barriers = new List<GameObject>();
+        mainUI = FindObjectOfType<MainUI>();
     }
 	
 	// Update is called once per frame
@@ -67,12 +75,34 @@ public class ThrowUI : MonoBehaviour {
             }
         } else if (state == TossState.Aim)
         {
+            if (ballsThrown >= ballsPerPlayer * 2)
+            {
+                FindObjectOfType<Petard>().Hoist();
+                thrower.enabled = false;
+                enabled = false;
+                mainUI.showHoistText();
+            } else if (!thrownPetard) {
+                mainUI.ShowPetardText();
+            } else if (p1Turn)
+            {
+                mainUI.ShowP1Text();
+            } else
+            {
+                mainUI.ShowP2Text();
+            }
             targetLine.gameObject.SetActive(true);
             targetDot.gameObject.SetActive(true);
             rotatingParent.gameObject.SetActive(false);
-            targetScale = Mathf.Clamp(targetScale + Input.GetAxis("Vertical") * (aimSpeed / 90f) * Time.deltaTime, startScale, 1);
+            if (Input.GetButtonDown("Toggle")) aimToggle = !aimToggle;
+            if (!aimToggle)
+            {
+                targetScale = Mathf.Clamp(targetScale + Input.GetAxis("Vertical") * (aimSpeed / 90f) * Time.deltaTime, startScale, 1);
+            } else
+            {
+                targetElevation = Mathf.Clamp(targetElevation + Input.GetAxis("Vertical") * aimSpeed * Time.deltaTime, -80, 0);
+            }
             targetRotation = Mathf.Clamp(targetRotation + Input.GetAxis("Horizontal") * aimSpeed * Time.deltaTime, -180, 180);
-            thrower.transform.rotation = Quaternion.Euler(thrower.transform.rotation.eulerAngles.x, targetRotation, 0);
+            thrower.transform.rotation = Quaternion.Euler(targetElevation, targetRotation, 0);
             innerCircle.localScale = targetScale * Vector3.one;
             if(drawLine && Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
             {
@@ -168,17 +198,27 @@ public class ThrowUI : MonoBehaviour {
     public void endThrow()
     {
         state = TossState.Wait;
+        //remove barriers
+        foreach (GameObject bar in barriers)
+        {
+            if (bar != null) Destroy(bar);
+        }
+        //throw object
         if (thrownPetard)
         {
-            lastBall = thrower.tossBall(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
+            if(p1Turn)
+            {
+                lastBall = thrower.tossP1Ball(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
+            } else
+            {
+                lastBall = thrower.tossP2Ball(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
+            }
+            ballsThrown++;
+            p1Turn = !p1Turn;
         } else
         {
             lastBall = thrower.tossPetard(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
             thrownPetard = true;
-        }
-        foreach(GameObject bar in barriers)
-        {
-            if (bar != null) Destroy(bar);
         }
     }
 

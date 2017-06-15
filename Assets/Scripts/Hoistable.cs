@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Hoistable : MonoBehaviour {
 
-    [HideInInspector]
-    public bool hoisting = false;
+    bool hoisting = false;
     [HideInInspector]
     public float maxHoist = -1;
     [HideInInspector]
     public bool finished = false;
+    public int team = 0;
 
     LineRenderer line;
     Rigidbody body;
@@ -27,6 +27,19 @@ public class Hoistable : MonoBehaviour {
         lastPoint = Vector3.zero;
         points = new List<Vector3>();
 	}
+
+    public void finish()
+    {
+        line.positionCount = points.Count;
+        line.SetPositions(points.ToArray());
+        body.constraints = RigidbodyConstraints.FreezeAll;
+        transform.position = highestPoint;
+    }
+
+    public void startHoisting()
+    {
+        hoisting = true;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -46,11 +59,12 @@ public class Hoistable : MonoBehaviour {
             if(transform.position.y < -1 || (minTime <= 0 && body.velocity.sqrMagnitude < .1f))
             {
                 hoisting = false;
-                line.positionCount = points.Count;
-                line.SetPositions(points.ToArray());
-                body.constraints = RigidbodyConstraints.FreezeAll;
-                transform.position = highestPoint;
                 finished = true;
+                if(transform.position.y < -1)
+                {
+                    body.constraints = RigidbodyConstraints.FreezeAll;
+                }
+                FindObjectOfType<MainUI>().finishHoist(this);
             }
         }
 	}

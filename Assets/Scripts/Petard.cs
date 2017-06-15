@@ -25,7 +25,7 @@ public class Petard : MonoBehaviour {
     {
         foreach(Hoistable h in FindObjectsOfType<Hoistable>())
         {
-            h.hoisting = true;
+            h.startHoisting();
             Vector3 distance = h.transform.position - transform.position;
             if (distance.magnitude < radius)
             {
