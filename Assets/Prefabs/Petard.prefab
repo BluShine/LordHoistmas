@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionForce: 300
-  hoistForce: 300
-  radius: 5
+  hoistForce: 500
+  radius: 10
   hoist: 0
 --- !u!135 &135352530291425278
 SphereCollider:
@@ -145,7 +145,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1506519951719394}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8b64099249d679b4492ffa91406ceef5, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.49999997

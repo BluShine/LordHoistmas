@@ -11,7 +11,8 @@ public class ThrowUI : MonoBehaviour {
     public Transform innerCircle;
     public LineRenderer targetLine;
     public Transform targetDot;
-    Rigidbody lastBall;
+    List<Rigidbody> lastBalls;
+    Transform petard;
     MainUI mainUI;
 
     public GameObject[] barrierPrefabs;
@@ -31,12 +32,15 @@ public class ThrowUI : MonoBehaviour {
     float targetElevation = -20f;
     Vector3 ballSpin;
     bool drawLine = true;
+    bool Player2AI = true;
     bool aimToggle = false;
     enum TossState
     {
         Aim, Throwing, Wait
     };
     TossState state = TossState.Aim;
+    float waitTimer = 0;
+    static float WAITAMOUNT = .2f;
 
     static float LINETIMESTEP = .1f;
     static float LINEDRAG = .5f;
@@ -50,12 +54,19 @@ public class ThrowUI : MonoBehaviour {
     bool thrownPetard = false;
     bool p1Turn = true;
 
+    static float aiAimA = -.00105f;
+    static float aiAimB = .0679f;
+    static float aiAimC = .1132f;
+
+    Vector3 aiSpin;
+
 	// Use this for initialization
 	void Start () {
         updateLine();
         bag = new List<int>();
         barriers = new List<GameObject>();
         mainUI = FindObjectOfType<MainUI>();
+        lastBalls = new List<Rigidbody>();
     }
 	
 	// Update is called once per frame
@@ -93,38 +104,70 @@ public class ThrowUI : MonoBehaviour {
             targetLine.gameObject.SetActive(true);
             targetDot.gameObject.SetActive(true);
             rotatingParent.gameObject.SetActive(false);
-            if (Input.GetButtonDown("Toggle")) aimToggle = !aimToggle;
-            if (!aimToggle)
+            if (!p1Turn && Player2AI)
             {
-                targetScale = Mathf.Clamp(targetScale + Input.GetAxis("Vertical") * (aimSpeed / 90f) * Time.deltaTime, startScale, 1);
-            } else
-            {
-                targetElevation = Mathf.Clamp(targetElevation + Input.GetAxis("Vertical") * aimSpeed * Time.deltaTime, -80, 0);
+                Vector3 dir = thrower.transform.position - petard.position;
+                targetRotation = Mathf.Atan(dir.x / dir.z) * Mathf.Rad2Deg;
+                float mag = new Vector2(dir.x, dir.z).magnitude;
+                targetElevation = -20;
+                targetScale = Mathf.Clamp((aiAimA * mag * mag + aiAimB * mag + aiAimC) * .75f, startScale, 1);
+                aiSpin = Vector3.zero;
+                aiSpin += Vector3.right * Random.Range(-1, 1);
+                aiSpin += (Vector3.down + Vector3.forward) * Random.Range(-1, 1);
+                aiSpin *= barrierSpinForce;
             }
-            targetRotation = Mathf.Clamp(targetRotation + Input.GetAxis("Horizontal") * aimSpeed * Time.deltaTime, -180, 180);
+            else
+            {
+                if (Input.GetButtonDown("Toggle")) aimToggle = !aimToggle;
+                if (!aimToggle)
+                {
+                    targetScale = Mathf.Clamp(targetScale + Input.GetAxis("Vertical") * (aimSpeed / 90f) * Time.deltaTime, startScale, 1);
+                }
+                else
+                {
+                    targetElevation = Mathf.Clamp(targetElevation + Input.GetAxis("Vertical") * aimSpeed * Time.deltaTime, -80, 0);
+                }
+                targetRotation = Mathf.Clamp(targetRotation + Input.GetAxis("Horizontal") * aimSpeed * Time.deltaTime, -180, 180);
+            }
             thrower.transform.rotation = Quaternion.Euler(targetElevation, targetRotation, 0);
             innerCircle.localScale = targetScale * Vector3.one;
             if(drawLine && Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
             {
                 updateLine();
             }
-            if(Input.GetButtonDown("Jump"))
+            if((p1Turn || !Player2AI) && Input.GetButtonDown("Jump"))
             {
                 startThrow();
+            } else if (!p1Turn && Player2AI)
+            {
+                aiThrow();
             }
         } else if (state == TossState.Wait)
         {
+            waitTimer -= Time.deltaTime;
             targetLine.gameObject.SetActive(false);
             targetDot.gameObject.SetActive(false);
             rotatingParent.gameObject.SetActive(false);
-            if (lastBall == null || lastBall.velocity.magnitude < .1f)
+            float maxVel = 0;
+            foreach(Rigidbody b in lastBalls)
+            {
+                if(b != null)
+                {
+                    maxVel = Mathf.Max(maxVel, b.velocity.magnitude);
+                }
+            }
+            if(maxVel >= .1f)
+            {
+                waitTimer = WAITAMOUNT;
+            }
+            if (waitTimer <= 0)
             {
                 state = TossState.Aim;
             }
         }
     }
 
-    public void startThrow()
+    void startThrow()
     {
         spawnBarriers();
         rotatingParent.localRotation = Quaternion.Euler(Vector3.zero);
@@ -132,6 +175,13 @@ public class ThrowUI : MonoBehaviour {
         throwScale = startScale;
         target.transform.localScale = Vector3.one * throwScale;
         ballSpin = Vector3.zero;
+    }
+
+    void aiThrow()
+    {
+        throwScale = targetScale;
+        ballSpin = aiSpin;
+        endThrow();
     }
 
     void spawnBarriers()
@@ -198,6 +248,7 @@ public class ThrowUI : MonoBehaviour {
     public void endThrow()
     {
         state = TossState.Wait;
+        waitTimer = WAITAMOUNT;
         //remove barriers
         foreach (GameObject bar in barriers)
         {
@@ -208,16 +259,17 @@ public class ThrowUI : MonoBehaviour {
         {
             if(p1Turn)
             {
-                lastBall = thrower.tossP1Ball(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
+                lastBalls.Add(thrower.tossP1Ball(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>());
             } else
             {
-                lastBall = thrower.tossP2Ball(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
+                lastBalls.Add(thrower.tossP2Ball(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>());
             }
             ballsThrown++;
             p1Turn = !p1Turn;
         } else
         {
-            lastBall = thrower.tossPetard(thrower.transform.forward * throwScale * maxForce, ballSpin).GetComponent<Rigidbody>();
+            petard = thrower.tossPetard(thrower.transform.forward * throwScale * maxForce, ballSpin).transform;
+            lastBalls.Add(petard.GetComponent<Rigidbody>());
             thrownPetard = true;
         }
     }
