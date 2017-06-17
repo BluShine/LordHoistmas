@@ -70,6 +70,7 @@ public class ThrowUI : MonoBehaviour {
         mainUI = FindObjectOfType<MainUI>();
         lastBalls = new List<Rigidbody>();
         buttonPrompt.enabled = false;
+        mainUI.ShowPetardText();
     }
 	
 	// Update is called once per frame
@@ -105,8 +106,9 @@ public class ThrowUI : MonoBehaviour {
                 enabled = false;
                 mainUI.showHoistText();
             } else if (!thrownPetard) {
-                mainUI.ShowPetardText();
-            } else if (p1Turn)
+                //mainUI.ShowPetardText();
+            }
+            else if (p1Turn)
             {
                 mainUI.ShowP1Text();
             } else
@@ -174,7 +176,21 @@ public class ThrowUI : MonoBehaviour {
             }
             if (waitTimer <= 0)
             {
-                state = TossState.Aim;
+                if (petard == null)
+                {
+                    PetardFail();
+                    state = TossState.Aim;
+                }
+                else if (new Vector2(thrower.transform.position.x - petard.transform.position.x,
+                  thrower.transform.position.z - petard.transform.position.z).magnitude < 5f)
+                {
+                    SelfHoist();
+                    waitTimer = 9999;
+                }
+                else
+                {
+                    state = TossState.Aim;
+                }
             }
         }
     }
@@ -319,6 +335,18 @@ public class ThrowUI : MonoBehaviour {
         {
             targetDot.transform.position = Vector3.down * 10;
         }
+    }
+
+    void PetardFail()
+    {
+        mainUI.ShowPetardFail();
+        thrownPetard = false;
+        p1Turn = true;
+    }
+
+    void SelfHoist()
+    {
+        mainUI.ShowSelfHoist();
     }
 
     public void hit(Collider t)

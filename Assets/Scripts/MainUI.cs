@@ -32,6 +32,18 @@ public class MainUI : MonoBehaviour {
 		
 	}
 
+    public void ShowPetardFail()
+    {
+        text.text = "Petard lost. Try again!";
+        text.color = neutralColor;
+    }
+
+    public void ShowSelfHoist()
+    {
+        text.text = "HOISTED BY YOUR OWN PETARD!";
+        text.color = neutralColor;
+    }
+
     public void ShowPetardText()
     {
         text.text = "Place the Petard";
