@@ -86,6 +86,7 @@ public class MainUI : MonoBehaviour {
     {
         Hoistable p1Max = null;
         Hoistable p2Max = null;
+        Petard petard = FindObjectOfType<Petard>();
         foreach(Hoistable h in FindObjectsOfType<Hoistable>())
         {
             if(h.team == 0)
@@ -103,32 +104,40 @@ public class MainUI : MonoBehaviour {
             }
         }
 
-        if(p1Max == null && p2Max == null)
+        CameraMover cam = FindObjectOfType<CameraMover>();
+        cam.spinMode = true;
+        if (p1Max == null && p2Max == null)
         {
             text.text = "FAILURE TO HOIST!";
             text.color = neutralColor;
+            cam.spinTarget = petard.transform;
         } else if (p1Max == null)
         {
             text.text = opponentName + " won by default!";
             text.color = p2Color;
+            cam.spinTarget = p2Max.transform;
         } else if (p2Max == null)
         {
             text.text = "You win by default!";
             text.color = p1Color;
             won = true;
+            cam.spinTarget = p1Max.transform;
         } else if (p1Max.highestPoint.y == p2Max.highestPoint.y)
         {
             text.text = "DRAW! Hoisted " + p1Max.highestPoint.y.ToString("F2") + "m";
             text.color = neutralColor;
+            cam.spinTarget = petard.transform;
         } else if (p1Max.highestPoint.y > p2Max.highestPoint.y)
         {
             text.text = "YOU WIN! Hoisted " + p1Max.highestPoint.y.ToString("F2") + "m";
             text.color = p1Color;
             won = true;
+            cam.spinTarget = p1Max.transform;
         } else
         {
             text.text = opponentName + " won! Hoisted " + p1Max.highestPoint.y.ToString("F2") + "m";
             text.color = p2Color;
+            cam.spinTarget = p2Max.transform;
         }
     }
 }

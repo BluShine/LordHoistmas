@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ThrowUI : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class ThrowUI : MonoBehaviour {
     public Transform innerCircle;
     public LineRenderer targetLine;
     public Transform targetDot;
+    public Text buttonPrompt;
     List<Rigidbody> lastBalls;
     Transform petard;
     MainUI mainUI;
@@ -67,6 +69,7 @@ public class ThrowUI : MonoBehaviour {
         barriers = new List<GameObject>();
         mainUI = FindObjectOfType<MainUI>();
         lastBalls = new List<Rigidbody>();
+        buttonPrompt.enabled = false;
     }
 	
 	// Update is called once per frame
@@ -79,6 +82,15 @@ public class ThrowUI : MonoBehaviour {
             rotatingParent.localRotation = Quaternion.Euler(rotatingParent.localEulerAngles + spinSpeed * Vector3.forward * -Input.GetAxis("Horizontal"));
             throwScale = Mathf.Min(throwScale + Time.deltaTime * scaleSpeed, 1);
             target.transform.localScale = Vector3.one * throwScale;
+
+            if(Mathf.Abs(throwScale - targetScale) < .05f)
+            {
+                buttonPrompt.enabled = true;
+                buttonPrompt.canvasRenderer.SetAlpha(1 - Mathf.Abs(throwScale - targetScale) / .05f);
+            } else
+            {
+                buttonPrompt.enabled = false;
+            }
 
             if(throwScale == 1 || Input.GetButtonDown("Jump"))
             {
@@ -194,7 +206,7 @@ public class ThrowUI : MonoBehaviour {
             {
                 for(int j = 0; j < 2; j++)
                 {
-                    Barrier bar = GameObject.Instantiate<GameObject>(barrierPrefabs[pullBag()]).GetComponent<Barrier>();
+                    Barrier bar = GameObject.Instantiate<GameObject>(barrierPrefabs[pullBag()], transform).GetComponent<Barrier>();
                     bar.curveDirection *= barrierSpinForce;
                     bar.transform.position = transform.position;
                     bar.transform.localScale = Vector3.one * (.5f + Mathf.Pow(6, i));
@@ -206,7 +218,7 @@ public class ThrowUI : MonoBehaviour {
                 refreshBag();
                 for (int j = 0; j < 3; j++)
                 {
-                    Barrier bar = GameObject.Instantiate<GameObject>(barrierPrefabs[pullBag()]).GetComponent<Barrier>();
+                    Barrier bar = GameObject.Instantiate<GameObject>(barrierPrefabs[pullBag()], transform).GetComponent<Barrier>();
                     bar.curveDirection *= barrierSpinForce;
                     bar.transform.position = transform.position;
                     bar.transform.localScale = Vector3.one * (.5f + Mathf.Pow(6, i));
@@ -272,6 +284,12 @@ public class ThrowUI : MonoBehaviour {
             lastBalls.Add(petard.GetComponent<Rigidbody>());
             thrownPetard = true;
         }
+
+        targetElevation = -20;
+        targetRotation = 0;
+        targetScale = .5f;
+        updateLine();
+        buttonPrompt.enabled = false;
     }
 
     void updateLine()
