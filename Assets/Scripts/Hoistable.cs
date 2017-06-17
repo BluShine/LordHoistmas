@@ -56,11 +56,11 @@ public class Hoistable : MonoBehaviour {
                 points.Add(transform.position);
                 lastPoint = transform.position;
             }
-            if(transform.position.y < -1 || (minTime <= 0 && body.velocity.sqrMagnitude < .1f))
+            if(transform.position.y < -.1 || (minTime <= 0 && body.velocity.sqrMagnitude < .1f))
             {
                 hoisting = false;
                 finished = true;
-                if(transform.position.y < -1)
+                if(transform.position.y < -.1)
                 {
                     body.constraints = RigidbodyConstraints.FreezeAll;
                 }

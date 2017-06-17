@@ -12,30 +12,15 @@
    width="512"
    height="512"
    viewBox="0 0 512.00001 512.00001"
-   id="svg2"
+   id="svg4186"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="circle_ground.svg"
-   inkscape:export-filename="C:\Users\Me\Documents\GitHub\LordHoistmas\Assets\Materials\circle_ground.png"
+   sodipodi:docname="star.svg"
+   inkscape:export-filename="C:\Users\Me\Documents\GitHub\LordHoistmas\Assets\Materials\star.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
-     id="defs4">
-    <marker
-       inkscape:stockid="Arrow1Lstart"
-       orient="auto"
-       refY="0.0"
-       refX="0.0"
-       id="Arrow1Lstart"
-       style="overflow:visible"
-       inkscape:isstock="true">
-      <path
-         id="path4142"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#229718;fill-opacity:1"
-         transform="scale(0.8) translate(12.5,0)" />
-    </marker>
-  </defs>
+     id="defs4188" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -43,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="166.23057"
-     inkscape:cy="247.36121"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="20.20684"
+     inkscape:cy="294.98619"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -57,7 +42,7 @@
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
-     id="metadata7">
+     id="metadata4191">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -73,11 +58,22 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-540.36216)">
-    <circle
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#dcf4df;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:20,40;stroke-dashoffset:0;stroke-opacity:1"
-       id="path4136"
-       cx="256"
-       cy="796.36218"
-       r="242.08197" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path4736"
+       sodipodi:sides="5"
+       sodipodi:cx="250.51785"
+       sodipodi:cy="785.68188"
+       sodipodi:r1="251.44481"
+       sodipodi:r2="106.341"
+       sodipodi:arg1="-2.3675577"
+       sodipodi:arg2="-1.7392391"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0.05"
+       d="M 67.432491,614.30776 222.40696,693.09434 373.51604,567.95157 342.94729,734.05692 487.30022,817.07136 339.05675,860.09602 298.11445,1033.0557 201.03939,880.34956 36.9792,911.74335 143.86184,770.45511 Z"
+       inkscape:transform-center-x="-14.308174"
+       inkscape:transform-center-y="9.4653778" />
   </g>
 </svg>

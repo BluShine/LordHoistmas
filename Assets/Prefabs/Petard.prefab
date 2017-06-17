@@ -127,6 +127,8 @@ MonoBehaviour:
   hoistForce: 500
   radius: 10
   hoist: 0
+  explosionPrefab: {fileID: 1621074745827556, guid: c19e360dc8d1a674bb801cd055ddaa4b,
+    type: 2}
 --- !u!135 &135352530291425278
 SphereCollider:
   m_ObjectHideFlags: 1

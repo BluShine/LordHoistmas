@@ -10,6 +10,8 @@ public class Petard : MonoBehaviour {
 
     public bool hoist = false;
 
+    public GameObject explosionPrefab;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -33,6 +35,8 @@ public class Petard : MonoBehaviour {
                 h.GetComponent<Rigidbody>().AddForce((distance.normalized * explosionForce + Vector3.up * hoistForce) * forceScale);
             }
         }
+        GetComponent<MeshRenderer>().enabled = false;
+        GameObject explosion = Instantiate<GameObject>(explosionPrefab, Vector3.Scale(transform.position, new Vector3(1, 0, 1)), Quaternion.identity);
         //Destroy(gameObject);
     }
 }

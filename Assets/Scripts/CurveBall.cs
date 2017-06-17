@@ -20,7 +20,7 @@ public class CurveBall : MonoBehaviour {
         Vector3 curveDirection = (rb.GetPointVelocity(transform.position + velDirection) - rb.velocity);
         rb.AddForce((curveDirection - velDirection) * velMag * curvePower, ForceMode.Acceleration);
 
-        if (transform.position.y < -5)
+        if (transform.position.y < -1)
         {
             Destroy(gameObject);
         }
