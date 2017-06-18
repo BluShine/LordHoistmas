@@ -8,8 +8,6 @@ public class Petard : MonoBehaviour {
     public float hoistForce = 5;
     public float radius = 5;
 
-    public bool hoist = false;
-
     public GameObject explosionPrefab;
 
 	// Use this for initialization
@@ -19,8 +17,7 @@ public class Petard : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (hoist) Hoist();
-        hoist = false;
+
 	}
 
     public void Hoist()

@@ -185,6 +185,8 @@ public class ThrowUI : MonoBehaviour {
                   thrower.transform.position.z - petard.transform.position.z).magnitude < 5f)
                 {
                     SelfHoist();
+                    petard.GetComponent<Petard>().Hoist();
+                    FindObjectOfType<CameraMover>().HoistedByOwnPetard();
                     waitTimer = 9999;
                 }
                 else

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraMover : MonoBehaviour {
 
     public List<Transform> views;
+    public Transform deadView;
 
     public float lerpSpeed = 1;
     float lerpAmount = 0;
@@ -19,11 +20,18 @@ public class CameraMover : MonoBehaviour {
     public float spinDistance = 5;
     public float spinSpeed = 1;
     float spinAngle = 0;
+    bool dead = false;
 
 	// Use this for initialization
 	void Start () {
 		
 	}
+
+    public void HoistedByOwnPetard()
+    {
+        dead = true;
+        lerpAmount = 1;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -34,6 +42,11 @@ public class CameraMover : MonoBehaviour {
             transform.position = spinTarget.position + lookDir;
             transform.rotation = Quaternion.LookRotation(-lookDir.normalized);
             spinAngle = (spinAngle + spinSpeed * Time.deltaTime * 360) % 360;
+        } else if (dead)
+        {
+            lerpAmount = Mathf.Max(0, lerpAmount - lerpSpeed * Time.deltaTime);
+            transform.position = Vector3.Lerp(deadView.position, views[viewIndex].position, lerpAmount);
+            transform.rotation = Quaternion.Lerp(deadView.rotation, views[viewIndex].rotation, lerpAmount);
         }
         else
         {
