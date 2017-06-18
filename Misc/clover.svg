@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="512"
+   height="512"
+   viewBox="0 0 512.00001 512.00001"
+   id="svg4186"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="clover.svg"
+   inkscape:export-filename="C:\Users\Me\Documents\GitHub\LordHoistmas\Assets\Materials\grass.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4188" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.84956398"
+     inkscape:cx="229.59873"
+     inkscape:cy="186.12011"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:snap-page="false"
+     inkscape:window-width="855"
+     inkscape:window-height="768"
+     inkscape:window-x="-7"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:object-paths="false"
+     inkscape:object-nodes="true" />
+  <metadata
+     id="metadata4191">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-540.36216)">
+    <path
+       style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:1.11728728px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+       d="m 219.46362,807.81212 c 0,0 -138.837854,13.57171 -178.687939,-31.96044 -55.88392,-72.26953 -23.450755,-119.60141 35.966302,-142.77441 -2.994703,-64.78086 73.004277,-95.00088 135.457897,-44.63001 49.59279,42.54739 40.67692,191.76266 40.67692,191.76266 0,0 63.39729,-104.72139 112.77656,-120.89099 97.98264,-32.08512 145.18743,54.9821 117.22197,99.08318 34.31896,42.29398 34.953,134.28012 -61.50453,142.89157 -78.51775,7.00984 -165.58851,-90.57607 -165.58851,-90.57607 0,0 90.16777,132.99172 63.71793,193.60149 -32.3026,57.4824 -111.36086,52.6438 -134.23063,11.4958 C 134.81748,1027.9929 83.550312,978.11809 84.764025,927.14036 87.810715,870.11724 219.46362,807.81212 219.46362,807.81212 Z"
+       id="path4708"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccscsccccc" />
+    <path
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#f6f6ea;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:16;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="M 217.32617 125.79297 A 149.66287 149.66287 0 0 0 108.96094 241.56836 C 130.70271 232.89632 166.45454 216.43403 185.97852 195.36719 C 203.6388 176.31131 212.80378 146.51466 217.32617 125.79297 z M 354.10352 157.66211 C 351.66819 181.22715 348.93759 219.88857 353.12305 249.51172 C 357.51069 280.56585 377.69919 316.17742 390.17188 335.79883 A 149.66287 149.66287 0 0 0 405.44531 270.35547 A 149.66287 149.66287 0 0 0 354.10352 157.66211 z M 131.39062 353.37891 A 149.66287 149.66287 0 0 0 255.7832 420.01758 A 149.66287 149.66287 0 0 0 292.11914 415.39453 C 274.49196 399.50592 246.50607 376.59 222.4668 367.2207 C 196.26941 357.01028 155.06524 354.16097 131.39062 353.37891 z "
+       transform="translate(0,540.36216)"
+       id="path4710" />
+  </g>
+</svg>

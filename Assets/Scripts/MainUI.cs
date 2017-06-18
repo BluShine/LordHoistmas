@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainUI : MonoBehaviour {
 
@@ -19,6 +20,11 @@ public class MainUI : MonoBehaviour {
 
     public string opponentName = "Opponent";
 
+    public string nextScene;
+
+    bool readyRestart = false;
+    bool readyContinue = false;
+
 	// Use this for initialization
 	void Start () {
         throwUI = FindObjectOfType<ThrowUI>();
@@ -29,7 +35,16 @@ public class MainUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(Input.GetButtonDown("Jump"))
+        {
+            if(readyRestart)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            } else if (readyContinue)
+            {
+                SceneManager.LoadScene(nextScene);
+            }
+        }
 	}
 
     public void ShowPetardFail()
@@ -40,8 +55,9 @@ public class MainUI : MonoBehaviour {
 
     public void ShowSelfHoist()
     {
-        text.text = "HOISTED BY YOUR OWN PETARD!";
+        text.text = "HOISTED BY YOUR OWN PETARD!\npress space";
         text.color = neutralColor;
+        readyRestart = true;
     }
 
     public void ShowPetardText()
@@ -123,33 +139,40 @@ public class MainUI : MonoBehaviour {
             text.text = "FAILURE TO HOIST!";
             text.color = neutralColor;
             cam.spinTarget = petard.transform;
+            readyRestart = true;
         } else if (p1Max == null)
         {
             text.text = opponentName + " won by default!";
             text.color = p2Color;
             cam.spinTarget = p2Max.transform;
+            readyRestart = true;
         } else if (p2Max == null)
         {
             text.text = "You win by default!";
             text.color = p1Color;
             won = true;
             cam.spinTarget = p1Max.transform;
+            readyContinue = true;
         } else if (p1Max.highestPoint.y == p2Max.highestPoint.y)
         {
             text.text = "DRAW! Hoisted " + p1Max.highestPoint.y.ToString("F2") + "m";
             text.color = neutralColor;
             cam.spinTarget = petard.transform;
+            readyRestart = true;
         } else if (p1Max.highestPoint.y > p2Max.highestPoint.y)
         {
             text.text = "YOU WIN! Hoisted " + p1Max.highestPoint.y.ToString("F2") + "m";
             text.color = p1Color;
             won = true;
             cam.spinTarget = p1Max.transform;
+            readyContinue = true;
         } else
         {
             text.text = opponentName + " won! Hoisted " + p1Max.highestPoint.y.ToString("F2") + "m";
             text.color = p2Color;
             cam.spinTarget = p2Max.transform;
+            readyRestart = true;
         }
+        text.text = text.text + "\npress space";
     }
 }

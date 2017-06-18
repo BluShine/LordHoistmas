@@ -13,6 +13,7 @@ public class ThrowUI : MonoBehaviour {
     public LineRenderer targetLine;
     public Transform targetDot;
     public Text buttonPrompt;
+    public Text ballCountText;
     List<Rigidbody> lastBalls;
     Transform petard;
     MainUI mainUI;
@@ -103,13 +104,17 @@ public class ThrowUI : MonoBehaviour {
             {
                 FindObjectOfType<Petard>().Hoist();
                 thrower.enabled = false;
+                targetLine.enabled = false;
+                targetDot.transform.position = Vector3.down * 20;
                 enabled = false;
                 mainUI.showHoistText();
             } else if (!thrownPetard) {
                 //mainUI.ShowPetardText();
+                ballCountText.text = "Petard";
             }
             else if (p1Turn)
             {
+                ballCountText.text = "Ball " + Mathf.FloorToInt(1 + ballsThrown / 2) + "/" + ballsPerPlayer;
                 mainUI.ShowP1Text();
             } else
             {
@@ -126,8 +131,8 @@ public class ThrowUI : MonoBehaviour {
                 targetElevation = -20;
                 targetScale = Mathf.Clamp((aiAimA * mag * mag + aiAimB * mag + aiAimC) * .75f, startScale, 1);
                 aiSpin = Vector3.zero;
-                aiSpin += Vector3.right * Random.Range(-1, 1);
-                aiSpin += (Vector3.down + Vector3.forward) * Random.Range(-1, 1);
+                aiSpin += Vector3.right * Random.Range(-2, 2);
+                aiSpin += (Vector3.down + Vector3.forward) * Random.Range(-2, 2);
                 aiSpin *= barrierSpinForce;
             }
             else
