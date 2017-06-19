@@ -32,7 +32,7 @@ public class ThrowUI : MonoBehaviour {
     float targetScale = .5f;
     float throwScale = .1f;
     float targetRotation = 0;
-    float targetElevation = -20f;
+    float targetElevation = -60f;
     Vector3 ballSpin;
     bool drawLine = true;
     bool Player2AI = true;
@@ -57,9 +57,13 @@ public class ThrowUI : MonoBehaviour {
     bool thrownPetard = false;
     bool p1Turn = true;
 
+    //20 degrees
     static float aiAimA = -.00105f;
     static float aiAimB = .0679f;
     static float aiAimC = .1132f;
+
+    //45degrees: -.000714, 0.0585, 0.1170
+    //60degrees: -.001962, 0.0876, 0.0769
 
     Vector3 aiSpin;
 
@@ -126,17 +130,28 @@ public class ThrowUI : MonoBehaviour {
             if (!p1Turn && Player2AI)
             {
                 Vector3 dir = thrower.transform.position - petard.position;
-                targetRotation = Mathf.Atan(dir.x / dir.z) * Mathf.Rad2Deg;
+                targetRotation = Mathf.Atan(dir.x / dir.z) * Mathf.Rad2Deg + Random.Range(-5f, 5f);
                 float mag = new Vector2(dir.x, dir.z).magnitude;
                 targetElevation = -20;
+                float tsqr = targetElevation * targetElevation;
+                //brute forced witchcraft
+                aiAimA = -0.000002416f * tsqr - 0.00017048f * targetElevation - 0.0034932f;
+                aiAimB = 0.0000579f * tsqr + 0.0041395f * targetElevation + 0.12753f;
+                aiAimC = -0.000070633f * tsqr - 0.0047432f * targetElevation + 0.04659f;
                 targetScale = Mathf.Clamp((aiAimA * mag * mag + aiAimB * mag + aiAimC) * .75f, startScale, 1);
                 aiSpin = Vector3.zero;
                 aiSpin += Vector3.right * Random.Range(-2, 2);
-                aiSpin += (Vector3.down + Vector3.forward) * Random.Range(-2, 2);
+                aiSpin += (Vector3.down + Vector3.forward) * Random.Range(0, 0);
                 aiSpin *= barrierSpinForce;
+                targetElevation += Random.Range(-3f, 3f);
             }
             else
             {
+                if(Input.GetButtonDown("Fire2"))
+                {
+                    Vector3 diff = thrower.transform.position - targetDot.transform.position;
+                    Debug.Log(new Vector2(diff.x, diff.z).magnitude + " , " + targetScale);
+                }
                 if (Input.GetButtonDown("Toggle")) aimToggle = !aimToggle;
                 if (!aimToggle)
                 {

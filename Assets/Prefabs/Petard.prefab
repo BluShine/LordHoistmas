@@ -25,7 +25,6 @@ GameObject:
   - component: {fileID: 54808818048712302}
   - component: {fileID: 114322507730178332}
   - component: {fileID: 114759484599988930}
-  - component: {fileID: 136437016495515904}
   m_Layer: 0
   m_Name: Petard
   m_TagString: Untagged
@@ -84,7 +83,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1506519951719394}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &54808818048712302
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -126,7 +125,6 @@ MonoBehaviour:
   explosionForce: 300
   hoistForce: 500
   radius: 10
-  hoist: 0
   explosionPrefab: {fileID: 1621074745827556, guid: c19e360dc8d1a674bb801cd055ddaa4b,
     type: 2}
 --- !u!135 &135352530291425278
@@ -137,20 +135,7 @@ SphereCollider:
   m_GameObject: {fileID: 1506519951719394}
   m_Material: {fileID: 13400000, guid: 8b64099249d679b4492ffa91406ceef5, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136437016495515904
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1506519951719394}
-  m_Material: {fileID: 13400000, guid: 8b64099249d679b4492ffa91406ceef5, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.49999997
-  m_Height: 1.9999999
-  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
