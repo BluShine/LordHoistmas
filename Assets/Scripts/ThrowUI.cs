@@ -32,7 +32,7 @@ public class ThrowUI : MonoBehaviour {
     float targetScale = .5f;
     float throwScale = .1f;
     float targetRotation = 0;
-    float targetElevation = -60f;
+    float targetElevation = -30f;
     Vector3 ballSpin;
     bool drawLine = true;
     bool Player2AI = true;
@@ -64,6 +64,14 @@ public class ThrowUI : MonoBehaviour {
 
     //45degrees: -.000714, 0.0585, 0.1170
     //60degrees: -.001962, 0.0876, 0.0769
+
+    public float aiElevation = -20;
+    public float aiElevationRandomness = 3;
+    public float aiPower = .75f;
+    public float aiPowerRandomness = .1f;
+    public int aiTopSpinRandomness = 2;
+    public int aiSideSpinRandomness = 1;
+    public float aiAimRandomness = 5f;
 
     Vector3 aiSpin;
 
@@ -130,7 +138,7 @@ public class ThrowUI : MonoBehaviour {
             if (!p1Turn && Player2AI)
             {
                 Vector3 dir = thrower.transform.position - petard.position;
-                targetRotation = Mathf.Atan(dir.x / dir.z) * Mathf.Rad2Deg + Random.Range(-5f, 5f);
+                targetRotation = Mathf.Atan(dir.x / dir.z) * Mathf.Rad2Deg + Random.Range(-aiAimRandomness, aiAimRandomness);
                 float mag = new Vector2(dir.x, dir.z).magnitude;
                 targetElevation = -20;
                 float tsqr = targetElevation * targetElevation;
@@ -138,12 +146,13 @@ public class ThrowUI : MonoBehaviour {
                 aiAimA = -0.000002416f * tsqr - 0.00017048f * targetElevation - 0.0034932f;
                 aiAimB = 0.0000579f * tsqr + 0.0041395f * targetElevation + 0.12753f;
                 aiAimC = -0.000070633f * tsqr - 0.0047432f * targetElevation + 0.04659f;
-                targetScale = Mathf.Clamp((aiAimA * mag * mag + aiAimB * mag + aiAimC) * .75f, startScale, 1);
+                targetScale = Mathf.Clamp((aiAimA * mag * mag + aiAimB * mag + aiAimC) * aiPower + 
+                    Random.Range(-aiPowerRandomness, aiPowerRandomness), startScale, 1);
                 aiSpin = Vector3.zero;
-                aiSpin += Vector3.right * Random.Range(-2, 2);
-                aiSpin += (Vector3.down + Vector3.forward) * Random.Range(0, 0);
+                aiSpin += Vector3.right * Random.Range(-aiTopSpinRandomness, aiTopSpinRandomness);
+                aiSpin += (Vector3.down + Vector3.forward) * Random.Range(aiSideSpinRandomness, aiSideSpinRandomness);
                 aiSpin *= barrierSpinForce;
-                targetElevation += Random.Range(-3f, 3f);
+                targetElevation += Random.Range(-aiElevationRandomness, aiElevationRandomness);
             }
             else
             {
@@ -165,10 +174,9 @@ public class ThrowUI : MonoBehaviour {
             }
             thrower.transform.rotation = Quaternion.Euler(targetElevation, targetRotation, 0);
             innerCircle.localScale = targetScale * Vector3.one;
-            if(drawLine && Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
-            {
-                updateLine();
-            }
+            //if(drawLine && Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+            updateLine();
+            
             if((p1Turn || !Player2AI) && Input.GetButtonDown("Jump"))
             {
                 startThrow();
